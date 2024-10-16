@@ -32,6 +32,23 @@ export default function tensionCalcScreen() {
   );
 }
 
+
+
+//function to calculate %tension 
+function calculateTension(lSpan: number, pLoad: number, yMid: number, qWeight: number) {
+    if (lSpan <= 0 || pLoad <= 0 || yMid <= 0 || qWeight <= 0) {
+      return;
+    }
+
+    const term1 = (lSpan * pLoad) / (4 * yMid);
+    const term2 = (qWeight * lSpan ** 2) / (8 * yMid);
+
+    const result = term1 + term2;
+    return "Tension = " + result;
+}
+
+
+
 //css
 const styles = StyleSheet.create({
     titleContainer: {
