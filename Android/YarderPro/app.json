@@ -33,6 +33,7 @@
     "experiments": {
       "typedRoutes": true
     },
+    "owner": "yarderpro",
     "extra": {
       "eas": {
         "projectId": "cf1234d2-5182-4623-8a9c-1f4a0a71525f"
