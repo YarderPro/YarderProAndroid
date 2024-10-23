@@ -1,4 +1,4 @@
-import { Image, StyleSheet, TextInput, Text } from 'react-native';
+import { Image, StyleSheet, TextInput, Pressable, Text, View } from 'react-native';
 
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';  
@@ -26,36 +26,67 @@ export default function deflectionCalcScreen() {
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Enter values below: </ThemedText>
         <ThemedText type="default" style={styles.formula}>
-          % Deflection = (Sground – Smidspan) / 2.2 + (TowerH / Length) / 2.2
+            % Deflection = (Sground – Smidspan) / 2.2 + (TowerH / Length) / 2.2
         </ThemedText>
-        <TextInput 
-            style={styles.textInput} 
-            onChangeText={onsGroundChange} 
-            value={(sGround )} 
-            placeholder="% slope to ground..." 
-            keyboardType="numeric"
-        />
-        <TextInput 
-            style={styles.textInput} 
-            onChangeText={onsMidChange} 
-            value={(sMid )} 
-            placeholder="% midspan slope to carriage..." 
-            keyboardType="numeric"
-        />
-        <TextInput 
-            style={styles.textInput} 
-            onChangeText={ontowerHChange} 
-            value={(towerH )} 
-            placeholder="Tower height..." 
-            keyboardType="numeric"
-        />
-        <TextInput 
-            style={styles.textInput} 
-            onChangeText={onlengthChange} 
-            value={(length )} 
-            placeholder="Cable length..." 
-            keyboardType="numeric"
-        />
+
+        {/*Text input and buttons */}
+        <View style={styles.inputGrid}>
+          
+          <TextInput 
+              style={styles.textInput} 
+              onChangeText={onsGroundChange} 
+              value={(sGround )} 
+              placeholder="% slope to ground..." 
+              keyboardType="numeric"
+          />
+          <Pressable 
+              style={styles.button}
+              onPress={() => alert('You pressed a button.')}>
+              <Text>Button</Text>
+          </Pressable>
+        </View>
+        <View style={styles.inputGrid}>
+          <TextInput 
+              style={styles.textInput} 
+              onChangeText={onsMidChange} 
+              value={(sMid )} 
+              placeholder="% slope to midspan..." 
+              keyboardType="numeric"
+          />
+          <Pressable 
+              style={styles.button}
+              onPress={() => alert('You pressed a button.')}>
+              <Text>Button</Text>
+          </Pressable>
+        </View>
+        <View style={styles.inputGrid}>
+          <TextInput 
+              style={styles.textInput} 
+              onChangeText={ontowerHChange} 
+              value={(towerH )} 
+              placeholder="Tower height..." 
+              keyboardType="numeric"
+          />
+          <Pressable 
+              style={styles.button}
+              onPress={() => alert('You pressed a button.')}>
+              <Text>Button</Text>
+          </Pressable>
+        </View>
+        <View style={styles.inputGrid}>
+          <TextInput 
+              style={styles.textInput} 
+              onChangeText={onlengthChange} 
+              value={(length )} 
+              placeholder="Cable length..." 
+              keyboardType="numeric"
+          />
+          <Pressable 
+              style={styles.button}
+              onPress={() => alert('You pressed a button.')}>
+              <Text>Button</Text>
+          </Pressable>
+        </View>
         <ThemedText type="subtitle">{calculateDeflection(+sGround, +sMid, +towerH, +length)}</ThemedText>
 
       </ThemedView>
@@ -96,11 +127,27 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 1,
     height: 30,
-    width: 220,
+    width: 150,
     padding: 3,
   },
   formula: {
     fontSize: 10,
     fontStyle: 'italic',
+  },
+  button: {
+    height: 30,
+    width: 55,
+    padding: 3,
+    marginLeft: 5,
+    textAlign: 'center',
+    borderColor: 'black',
+    borderStyle: 'solid',
+    borderWidth: 1,
+  },
+  inputGrid: {
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'row',
+    alignContent: 'space-evenly',
   },
 });
