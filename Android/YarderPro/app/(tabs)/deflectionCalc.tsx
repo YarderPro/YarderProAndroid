@@ -11,6 +11,11 @@ export default function deflectionCalcScreen() {
     const [towerH, ontowerHChange] = React.useState('');
     const [length, onlengthChange] = React.useState('');
 
+    var isGroundDegrees = false;
+    var isMidDegrees = false;
+    var isTowerMetric = false;
+    var isLenghtMetic = false;
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -31,7 +36,7 @@ export default function deflectionCalcScreen() {
 
         {/*Text input and buttons */}
         <View style={styles.inputGrid}>
-          
+          {/*Input for % slope to ground*/}
           <TextInput 
               style={styles.textInput} 
               onChangeText={onsGroundChange} 
@@ -41,11 +46,15 @@ export default function deflectionCalcScreen() {
           />
           <Pressable 
               style={styles.button}
-              onPress={() => alert('You pressed a button.')}>
+              onPress={() => 
+                isGroundDegrees = true
+              }>
               <Text>Button</Text>
           </Pressable>
         </View>
+
         <View style={styles.inputGrid}>
+          {/*Input for % slope to midspan*/}
           <TextInput 
               style={styles.textInput} 
               onChangeText={onsMidChange} 
@@ -59,7 +68,9 @@ export default function deflectionCalcScreen() {
               <Text>Button</Text>
           </Pressable>
         </View>
+
         <View style={styles.inputGrid}>
+          {/*Input for towere height*/}
           <TextInput 
               style={styles.textInput} 
               onChangeText={ontowerHChange} 
@@ -73,7 +84,9 @@ export default function deflectionCalcScreen() {
               <Text>Button</Text>
           </Pressable>
         </View>
+
         <View style={styles.inputGrid}>
+          {/*Input for cable length*/}
           <TextInput 
               style={styles.textInput} 
               onChangeText={onlengthChange} 
@@ -87,19 +100,40 @@ export default function deflectionCalcScreen() {
               <Text>Button</Text>
           </Pressable>
         </View>
-        <ThemedText type="subtitle">{calculateDeflection(+sGround, +sMid, +towerH, +length)}</ThemedText>
+
+        {/*Result output*/}
+        <ThemedText type="subtitle">{calculateDeflection(+sGround, +sMid, +towerH, +length, 
+                                                        isGroundDegrees, isMidDegrees, isTowerMetric, isLenghtMetic)}
+        </ThemedText>
 
       </ThemedView>
     </ParallaxScrollView>
   );
 }
 
-// function to calculate %deflection
-function calculateDeflection(sGround: number, sMid: number, towerH: number, length: number) {
-    if (sGround <= 0 || sMid <= 0 || towerH <= 0 || length <= 0) {
+// function to calculate %deflection (will handle unit conversions)
+function calculateDeflection(sGround: number, sMid: number, towerH: number, length: number, 
+                            isGroundDegrees: boolean, isMidDegrees: boolean, isTowerMetric: boolean, isLenghtMetic: boolean) {
+    // Check for invalid inputs
+    if (sGround == null || sMid == null || towerH <= 0 || length <= 0) {
       return;
     }
 
+    // Convert units as needed
+    if (isGroundDegrees) {
+
+    }
+    if (isMidDegrees) {
+
+    }
+    if (isTowerMetric) {
+
+    }
+    if (isLenghtMetic) {
+
+    }
+
+    // Calculate / output results
     var result = ( (sGround - sMid) / 2.2) + ( (towerH / length) / 2.2 );
 
     return "%Deflection = " + result;
@@ -148,6 +182,5 @@ const styles = StyleSheet.create({
     display: 'flex',
     flex: 1,
     flexDirection: 'row',
-    alignContent: 'space-evenly',
   },
 });
