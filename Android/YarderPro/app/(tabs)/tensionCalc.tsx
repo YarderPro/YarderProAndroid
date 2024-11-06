@@ -37,7 +37,7 @@ export default function tensionCalcScreen() {
             style={styles.textInput} 
             onChangeText={lSpanChange} 
             value={(lSpan )} 
-            placeholder="Span between yarder and tailhold" 
+            placeholder="Yarder to tailhold span..." 
             keyboardType="numeric"
         />
          <TextInput 
@@ -51,14 +51,14 @@ export default function tensionCalcScreen() {
             style={styles.textInput} 
             onChangeText={yMidChange} 
             value={(yMid )} 
-            placeholder="Mid-span deflection" 
+            placeholder="Mid-span deflection..." 
             keyboardType="numeric"
         />
              <TextInput 
             style={styles.textInput} 
             onChangeText={qWeightChange} 
             value={(qWeight )} 
-            placeholder="Weight of the cable per unit length" 
+            placeholder="Weight of the cable..." 
             keyboardType="numeric"
         />
         
