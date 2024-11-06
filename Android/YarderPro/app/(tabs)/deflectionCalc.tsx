@@ -4,6 +4,7 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';  
 import { ThemedView } from '@/components/ThemedView';
 import React from 'react';
+import { isModuleNamespaceObject } from 'util/types';
   
 export default function deflectionCalcScreen() {
     const [sGround, onsGroundChange] = React.useState('');
@@ -64,7 +65,7 @@ export default function deflectionCalcScreen() {
           />
           <Pressable 
               style={styles.button}
-              onPress={() => alert('You pressed a button.')}>
+              onPress={() => isMidDegrees = true}>
               <Text>Button</Text>
           </Pressable>
         </View>
@@ -80,7 +81,7 @@ export default function deflectionCalcScreen() {
           />
           <Pressable 
               style={styles.button}
-              onPress={() => alert('You pressed a button.')}>
+              onPress={() => isTowerMetric = true}>
               <Text>Button</Text>
           </Pressable>
         </View>
@@ -96,7 +97,7 @@ export default function deflectionCalcScreen() {
           />
           <Pressable 
               style={styles.button}
-              onPress={() => alert('You pressed a button.')}>
+              onPress={() => isLenghtMetic = true}>
               <Text>Button</Text>
           </Pressable>
         </View>
@@ -114,6 +115,7 @@ export default function deflectionCalcScreen() {
 // function to calculate %deflection (will handle unit conversions)
 function calculateDeflection(sGround: number, sMid: number, towerH: number, length: number, 
                             isGroundDegrees: boolean, isMidDegrees: boolean, isTowerMetric: boolean, isLenghtMetic: boolean) {
+
     // Check for invalid inputs
     if (sGround == null || sMid == null || towerH <= 0 || length <= 0) {
       return;
@@ -121,16 +123,16 @@ function calculateDeflection(sGround: number, sMid: number, towerH: number, leng
 
     // Convert units as needed
     if (isGroundDegrees) {
-
+      sGround = Math.tan(sGround) * 100
     }
     if (isMidDegrees) {
-
+      sMid = Math.tan(sMid) * 100
     }
     if (isTowerMetric) {
-
+      towerH = towerH * 3.28084
     }
     if (isLenghtMetic) {
-
+      length = length * 3.28084
     }
 
     // Calculate / output results
