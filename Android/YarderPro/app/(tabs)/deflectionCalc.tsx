@@ -51,7 +51,7 @@ export default function deflectionCalcScreen() {
                 <Pressable
                     style={[styles.button, getButtonStyle(isGroundDegrees)]}
                     onPress={() => {
-                        alert('Set Ground to Degrees');
+                        // alert('Set Ground to Degrees');
                         setGroundDegrees(true);
                     }}>
                     <Text>Degrees</Text>
@@ -59,7 +59,7 @@ export default function deflectionCalcScreen() {
                 <Pressable
                     style={[styles.button, getButtonStyle(!isGroundDegrees)]}
                     onPress={() => {
-                        alert('Set Ground to %Slope');
+                        // alert('Set Ground to %Slope');
                         setGroundDegrees(false);
                     }}>
                     <Text>%Slope</Text>
@@ -77,7 +77,7 @@ export default function deflectionCalcScreen() {
                 <Pressable
                     style={[styles.button, getButtonStyle(isMidDegrees)]}
                     onPress={() => {
-                        alert('Set Midspan to Degrees');
+                        // alert('Set Midspan to Degrees');
                         setMidDegrees(true);
                     }}>
                     <Text>Degrees</Text>
@@ -85,7 +85,7 @@ export default function deflectionCalcScreen() {
                 <Pressable
                     style={[styles.button, getButtonStyle(!isMidDegrees)]}
                     onPress={() => {
-                        alert('Set Midspan to %Slope');
+                        // alert('Set Midspan to %Slope');
                         setMidDegrees(false);
                     }}>
                     <Text>%Slope</Text>
@@ -103,7 +103,7 @@ export default function deflectionCalcScreen() {
                 <Pressable
                     style={[styles.button, getButtonStyle(isTowerMetric)]}
                     onPress={() => {
-                        alert('Set Tower to Meters');
+                        // alert('Set Tower to Meters');
                         setTowerMetric(true);
                     }}>
                     <Text>Meters</Text>
@@ -111,7 +111,7 @@ export default function deflectionCalcScreen() {
                 <Pressable
                     style={[styles.button, getButtonStyle(!isTowerMetric)]}
                     onPress={() => {
-                        alert('Set Tower to Yards');
+                        // alert('Set Tower to Yards');
                         setTowerMetric(false);
                     }}>
                     <Text>Yards</Text>
@@ -129,7 +129,7 @@ export default function deflectionCalcScreen() {
                 <Pressable
                     style={[styles.button, getButtonStyle(isLengthMetric)]}
                     onPress={() => {
-                        alert('Set Length to Meters');
+                        // alert('Set Length to Meters');
                         setLengthMetric(true);
                     }}>
                     <Text>Meters</Text>
@@ -137,7 +137,7 @@ export default function deflectionCalcScreen() {
                 <Pressable
                     style={[styles.button, getButtonStyle(!isLengthMetric)]}
                     onPress={() => {
-                        alert('Set Length to Yards');
+                        // alert('Set Length to Yards');
                         setLengthMetric(false);
                     }}>
                     <Text>Yards</Text>
