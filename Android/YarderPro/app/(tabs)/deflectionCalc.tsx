@@ -12,10 +12,10 @@ export default function deflectionCalcScreen() {
     const [towerH, ontowerHChange] = React.useState('');
     const [length, onlengthChange] = React.useState('');
 
-    var isGroundDegrees = false;
-    var isMidDegrees = false;
-    var isTowerMetric = false;
-    var isLenghtMetic = false;
+    const [isGroundDegrees, setGroundDegrees] = React.useState(false);
+    const [isMidDegrees, setMidDegrees] = React.useState(false);
+    const [isTowerMetric, setTowerMetric] = React.useState(false);
+    const [isLengthMetric, setLengthMetric] = React.useState(false);
 
   return (
     <ParallaxScrollView
@@ -35,76 +35,115 @@ export default function deflectionCalcScreen() {
             % Deflection = (Sground – Smidspan) / 2.2 + (TowerH / Length) / 2.2
         </ThemedText>
 
-        {/*Text input and buttons */}
-        <View style={styles.inputGrid}>
-          {/*Input for % slope to ground*/}
-          <TextInput 
-              style={styles.textInput} 
-              onChangeText={onsGroundChange} 
-              value={(sGround )} 
-              placeholder="% slope to ground..." 
-              keyboardType="numeric"
-          />
-          <Pressable 
-              style={styles.button}
-              onPress={() => 
-                isGroundDegrees = true
-              }>
-              <Text>Button</Text>
-          </Pressable>
-        </View>
+          {/*Text input and buttons */}
+          <View style={styles.inputGrid}>
+                    <TextInput
+                        style={styles.textInput}
+                        onChangeText={onsGroundChange}
+                        value={sGround}
+                        placeholder="% slope to ground..."
+                        keyboardType="numeric"
+                    />
+                    <Pressable
+                        style={styles.button}
+                        onPress={() => {
+                            alert('Set Ground to Degrees');
+                            setGroundDegrees(true);
+                        }}>
+                        <Text>Degrees</Text>
+                    </Pressable>
+                    <Pressable
+                        style={styles.button}
+                        onPress={() => {
+                            alert('Toggle Ground Unit');
+                            setGroundDegrees(false);
+                        }}>
+                        <Text>%Slope</Text>
+                    </Pressable>
+                </View>
 
-        <View style={styles.inputGrid}>
-          {/*Input for % slope to midspan*/}
-          <TextInput 
-              style={styles.textInput} 
-              onChangeText={onsMidChange} 
-              value={(sMid )} 
-              placeholder="% slope to midspan..." 
-              keyboardType="numeric"
-          />
-          <Pressable 
-              style={styles.button}
-              onPress={() => isMidDegrees = true}>
-              <Text>Button</Text>
-          </Pressable>
-        </View>
+                <View style={styles.inputGrid}>
+                    <TextInput
+                        style={styles.textInput}
+                        onChangeText={onsMidChange}
+                        value={sMid}
+                        placeholder="% slope to midspan..."
+                        keyboardType="numeric"
+                    />
+                    <Pressable
+                        style={styles.button}
+                        onPress={() => {
+                            alert('Set Midspan to Degrees');
+                            setMidDegrees(true);
+                        }}>
+                        <Text>Degrees</Text>
+                    </Pressable>
+                    <Pressable
+                        style={styles.button}
+                        onPress={() => {
+                            alert('Toggle Midspan Unit');
+                            setMidDegrees(false);
+                        }}>
+                        <Text>%Slope</Text>
+                    </Pressable>
+                </View>
 
-        <View style={styles.inputGrid}>
-          {/*Input for towere height*/}
-          <TextInput 
-              style={styles.textInput} 
-              onChangeText={ontowerHChange} 
-              value={(towerH )} 
-              placeholder="Tower height..." 
-              keyboardType="numeric"
-          />
-          <Pressable 
-              style={styles.button}
-              onPress={() => isTowerMetric = true}>
-              <Text>Button</Text>
-          </Pressable>
-        </View>
+                <View style={styles.inputGrid}>
+                    <TextInput
+                        style={styles.textInput}
+                        onChangeText={ontowerHChange}
+                        value={towerH}
+                        placeholder="Tower height..."
+                        keyboardType="numeric"
+                    />
+                    <Pressable
+                        style={styles.button}
+                        onPress={() => {
+                            alert('Set Tower to Metric');
+                            setTowerMetric(true);
+                        }}>
+                        <Text>Meters</Text>
+                    </Pressable>
+                    <Pressable
+                        style={styles.button}
+                        onPress={() => {
+                            alert('Toggle Tower Unit');
+                            setTowerMetric(false);
+                        }}>
+                        <Text>Yards</Text>
+                    </Pressable>
+                </View>
 
-        <View style={styles.inputGrid}>
-          {/*Input for cable length*/}
-          <TextInput 
-              style={styles.textInput} 
-              onChangeText={onlengthChange} 
-              value={(length )} 
-              placeholder="Cable length..." 
-              keyboardType="numeric"
-          />
-          <Pressable 
-              style={styles.button}
-              onPress={() => isLenghtMetic = true}>
-              <Text>Button</Text>
-          </Pressable>
-        </View>
+                <View style={styles.inputGrid}>
+                    <TextInput
+                        style={styles.textInput}
+                        onChangeText={onlengthChange}
+                        value={length}
+                        placeholder="Cable length..."
+                        keyboardType="numeric"
+                    />
+                    <Pressable
+                        style={styles.button}
+                        onPress={() => {
+                            alert('Set Length to Metric');
+                            setLengthMetric(true);
+                        }}>
+                        <Text>Meters</Text>
+                    </Pressable>
+                    <Pressable
+                        style={styles.button}
+                        onPress={() => {
+                            alert('Toggle Length Unit');
+                            setLengthMetric(false);
+                        }}>
+                        <Text>Yards</Text>
+                    </Pressable>
+                </View>
+
 
         {/*Result output*/}
         <ThemedText type="subtitle">{calculateDeflection(+sGround, +sMid, +towerH, +length, 
-                                                        isGroundDegrees, isMidDegrees, isTowerMetric, isLenghtMetic)}
+                                                        isGroundDegrees, isMidDegrees, isTowerMetric, isLengthMetric)}
         </ThemedText>
 
       </ThemedView>
@@ -143,46 +182,50 @@ function calculateDeflection(sGround: number, sMid: number, towerH: number, leng
 
 const styles = StyleSheet.create({
   titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 8,
   },
   stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+      gap: 8,
+      marginBottom: 8,
   },
   reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+      height: 178,
+      width: 290,
+      bottom: 0,
+      left: 0,
+      position: 'absolute',
   },
   textInput: {
-    borderColor: 'black',
-    borderStyle: 'solid',
-    borderWidth: 1,
-    height: 30,
-    width: 150,
-    padding: 3,
+      borderColor: 'black',
+      borderStyle: 'solid',
+      borderWidth: 1,
+      height: 30,
+      width: 150,
+      padding: 3,
   },
   formula: {
-    fontSize: 10,
-    fontStyle: 'italic',
+      fontSize: 10,
+      fontStyle: 'italic',
   },
   button: {
-    height: 30,
-    width: 55,
-    padding: 3,
-    marginLeft: 5,
-    textAlign: 'center',
-    borderColor: 'black',
-    borderStyle: 'solid',
-    borderWidth: 1,
+      height: 30,
+      width: 65,
+      padding: 3,
+      marginLeft: 5,
+      textAlign: 'center',
+      borderColor: 'black',
+      borderStyle: 'solid',
+      borderWidth: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
   },
   inputGrid: {
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'row',
+      display: 'flex',
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 10,
   },
 });
