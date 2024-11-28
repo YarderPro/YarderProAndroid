@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
       borderStyle: 'solid',
       borderWidth: 1,
       height: 30,
-      width: 150,
+      width: 200,
       padding: 3,
   },
   formula: {
