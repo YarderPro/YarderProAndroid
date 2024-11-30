@@ -2,34 +2,16 @@ import { Image, StyleSheet, Pressable } from "react-native";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { useRouter, useLocalSearchParams } from "expo-router";
+import { useRouter } from "expo-router";
+import { useAppContext } from '../appContext';
 import React from "react";
 
 export default function HomeScreen() {
   const router = useRouter();
-  const params = useLocalSearchParams();
+  const { deflectionData } = useAppContext();
   const [calculations, setCalculations] = React.useState<
     { date: string; inputs: Record<string, any> }[]
   >([]);
-
-  React.useEffect(() => {
-    if (params.inputs) {
-      try {
-        const parsedInputs =
-          typeof params.inputs === "string"
-            ? JSON.parse(params.inputs)
-            : params.inputs;
-        if (typeof parsedInputs === "object" && parsedInputs !== null) {
-          setCalculations((prev) => [
-            ...prev,
-            { date: new Date().toLocaleDateString(), inputs: parsedInputs },
-          ]);
-        }
-      } catch (error) {
-        console.error("Failed to parse inputs:", error);
-      }
-    }
-  }, [params]);
 
   return (
     <ParallaxScrollView
@@ -43,25 +25,24 @@ export default function HomeScreen() {
     >
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Calculations</ThemedText>
+
         <Pressable
           style={styles.addButton}
           onPress={() => router.push("/deflectionCalc")}
-        >
+          >
           <ThemedText>+</ThemedText>
         </Pressable>
+
       </ThemedView>
-      <ThemedView style={styles.calculationList}>
-        {calculations.map((calc, index) => (
-          <Pressable
-            key={index}
-            style={styles.calculationBox}
-            onPress={() => router.push({ pathname: "/deflectionCalc", params: calc.inputs })}
-          >
-            <ThemedText>Calculation</ThemedText>
-            <ThemedText>{calc.date}</ThemedText>
-          </Pressable>
-        ))}
+
+      <ThemedView>
+            <ThemedText>Deflection Data:</ThemedText>
+            <ThemedText>Slope to Ground: {deflectionData.sGround}</ThemedText>
+            <ThemedText>Slope to Midspan: {deflectionData.sMid}</ThemedText>
+            <ThemedText>Tower Height: {deflectionData.towerH}</ThemedText>
+            <ThemedText>Length: {deflectionData.length}</ThemedText>
       </ThemedView>
+
     </ParallaxScrollView>
   );
 }

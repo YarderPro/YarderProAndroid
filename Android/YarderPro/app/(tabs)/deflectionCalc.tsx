@@ -1,20 +1,14 @@
-import {
-  Image,
-  StyleSheet,
-  TextInput,
-  Pressable,
-  Text,
-  View,
-} from "react-native";
+import { Image, StyleSheet, TextInput, Pressable, Text, View } from "react-native";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import React from "react";
-import { useRouter, useLocalSearchParams } from "expo-router";
+import { useAppContext } from '../appContext';
+import { useRouter} from "expo-router";
 
 export default function DeflectionCalcScreen() {
-  const params = useLocalSearchParams();
   const router = useRouter();
+  const { setDeflectionData } = useAppContext();
 
   // Initialize state with values from params or default to empty
   const [sGround, onsGroundChange] = React.useState<string>('');
@@ -29,17 +23,13 @@ export default function DeflectionCalcScreen() {
 
   const handleDone = () => {
     // Serialize the data and navigate back to the index
-    router.push({
-      pathname: "/",
-      params: {
-        inputs: JSON.stringify({
-          sGround,
-          sMid,
-          towerH,
-          length,
-        }),
-      },
+    setDeflectionData({
+        sGround,
+        sMid,
+        towerH,
+        length,
     });
+    router.push('/');
   };
 
   const getButtonStyle = (isSelected: boolean) => ({
