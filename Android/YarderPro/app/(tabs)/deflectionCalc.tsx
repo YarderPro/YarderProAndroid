@@ -1,232 +1,270 @@
-import { Image, StyleSheet, TextInput, Pressable, Text, View } from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  TextInput,
+  Pressable,
+  Text,
+  View,
+} from "react-native";
+import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import React from "react";
+import { useRouter, useLocalSearchParams } from "expo-router";
 
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';  
-import { ThemedView } from '@/components/ThemedView';
-import React from 'react';
-import { isModuleNamespaceObject } from 'util/types';
-  
-export default function deflectionCalcScreen() {
-    const [sGround, onsGroundChange] = React.useState('');
-    const [sMid, onsMidChange] = React.useState('');
-    const [towerH, ontowerHChange] = React.useState('');
-    const [length, onlengthChange] = React.useState('');
+export default function DeflectionCalcScreen() {
+  const params = useLocalSearchParams();
+  const router = useRouter();
 
-    const [isGroundDegrees, setGroundDegrees] = React.useState(false);
-    const [isMidDegrees, setMidDegrees] = React.useState(false);
-    const [isTowerMetric, setTowerMetric] = React.useState(false);
-    const [isLengthMetric, setLengthMetric] = React.useState(false);
+  // Initialize state with values from params or default to empty
+  const [sGround, onsGroundChange] = React.useState<string>('');
+  const [sMid, onsMidChange] = React.useState<string>(''); 
+  const [towerH, ontowerHChange] = React.useState<string>(''); 
+  const [length, onlengthChange] = React.useState<string>(''); 
 
-    const getButtonStyle = (isSelected: boolean) => ({
-      backgroundColor: isSelected ? '#d3d3d3' : '#fff',
-      opacity: isSelected ? 0.5 : 1,
+  const [isGroundDegrees, setGroundDegrees] = React.useState(false);
+  const [isMidDegrees, setMidDegrees] = React.useState(false);
+  const [isTowerMetric, setTowerMetric] = React.useState(false);
+  const [isLengthMetric, setLengthMetric] = React.useState(false);
+
+  const handleDone = () => {
+    // Serialize the data and navigate back to the index
+    router.push({
+      pathname: "/",
+      params: {
+        inputs: JSON.stringify({
+          sGround,
+          sMid,
+          towerH,
+          length,
+        }),
+      },
+    });
+  };
+
+  const getButtonStyle = (isSelected: boolean) => ({
+    backgroundColor: isSelected ? "#d3d3d3" : "#fff",
+    opacity: isSelected ? 0.5 : 1,
   });
+
   return (
     <ParallaxScrollView
-        headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-        headerImage={
-            <Image
-                source={require('@/assets/images/partial-react-logo.png')}
-                style={styles.reactLogo}
-            />
-        }>
-        <ThemedView style={styles.titleContainer}>
-            <ThemedText type="title">Deflection Calculator</ThemedText>
-        </ThemedView>
-        <ThemedView style={styles.stepContainer}>
-            <ThemedText type="subtitle">Enter values below:</ThemedText>
-            <ThemedText type="default" style={styles.formula}>
-                % Deflection = (Sground – Smidspan) / 2.2 + (TowerH / Length) / 2.2
-            </ThemedText>
+      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
+      headerImage={
+        <Image
+          source={require("@/assets/images/partial-react-logo.png")}
+          style={styles.reactLogo}
+        />
+      }
+    >
+      <ThemedView style={styles.titleContainer}>
+        <ThemedText type="title">Deflection Calculator</ThemedText>
+      </ThemedView>
+      <ThemedView style={styles.stepContainer}>
+        <ThemedText type="subtitle">Enter values below:</ThemedText>
+        <ThemedText type="default" style={styles.formula}>
+          % Deflection = (Sground – Smidspan) / 2.2 + (TowerH / Length) / 2.2
+        </ThemedText>
 
-            {/* Inputs and Buttons */}
-            <View style={styles.inputGrid}>
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={onsGroundChange}
-                    value={sGround}
-                    placeholder="% slope to ground..."
-                    keyboardType="numeric"
-                />
-                <Pressable
-                    style={[styles.button, getButtonStyle(isGroundDegrees)]}
-                    onPress={() => {
-                        // alert('Set Ground to Degrees');
-                        setGroundDegrees(true);
-                    }}>
-                    <Text>Degrees</Text>
-                </Pressable>
-                <Pressable
-                    style={[styles.button, getButtonStyle(!isGroundDegrees)]}
-                    onPress={() => {
-                        // alert('Set Ground to %Slope');
-                        setGroundDegrees(false);
-                    }}>
-                    <Text>%Slope</Text>
-                </Pressable>
-            </View>
+        {/* Inputs and Buttons */}
+        <View style={styles.inputGrid}>
+          <TextInput
+            style={styles.textInput}
+            onChangeText={onsGroundChange}
+            value={sGround}
+            placeholder="% slope to ground..."
+            keyboardType="numeric"
+          />
+          <Pressable
+            style={[styles.button, getButtonStyle(isGroundDegrees)]}
+            onPress={() => setGroundDegrees(true)}
+          >
+            <Text>Degrees</Text>
+          </Pressable>
+          <Pressable
+            style={[styles.button, getButtonStyle(!isGroundDegrees)]}
+            onPress={() => setGroundDegrees(false)}
+          >
+            <Text>%Slope</Text>
+          </Pressable>
+        </View>
 
-            <View style={styles.inputGrid}>
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={onsMidChange}
-                    value={sMid}
-                    placeholder="% slope to midspan..."
-                    keyboardType="numeric"
-                />
-                <Pressable
-                    style={[styles.button, getButtonStyle(isMidDegrees)]}
-                    onPress={() => {
-                        // alert('Set Midspan to Degrees');
-                        setMidDegrees(true);
-                    }}>
-                    <Text>Degrees</Text>
-                </Pressable>
-                <Pressable
-                    style={[styles.button, getButtonStyle(!isMidDegrees)]}
-                    onPress={() => {
-                        // alert('Set Midspan to %Slope');
-                        setMidDegrees(false);
-                    }}>
-                    <Text>%Slope</Text>
-                </Pressable>
-            </View>
+        <View style={styles.inputGrid}>
+          <TextInput
+            style={styles.textInput}
+            onChangeText={onsMidChange}
+            value={sMid}
+            placeholder="% slope to midspan..."
+            keyboardType="numeric"
+          />
+          <Pressable
+            style={[styles.button, getButtonStyle(isMidDegrees)]}
+            onPress={() => setMidDegrees(true)}
+          >
+            <Text>Degrees</Text>
+          </Pressable>
+          <Pressable
+            style={[styles.button, getButtonStyle(!isMidDegrees)]}
+            onPress={() => setMidDegrees(false)}
+          >
+            <Text>%Slope</Text>
+          </Pressable>
+        </View>
 
-            <View style={styles.inputGrid}>
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={ontowerHChange}
-                    value={towerH}
-                    placeholder="Tower height..."
-                    keyboardType="numeric"
-                />
-                <Pressable
-                    style={[styles.button, getButtonStyle(isTowerMetric)]}
-                    onPress={() => {
-                        // alert('Set Tower to Meters');
-                        setTowerMetric(true);
-                    }}>
-                    <Text>Meters</Text>
-                </Pressable>
-                <Pressable
-                    style={[styles.button, getButtonStyle(!isTowerMetric)]}
-                    onPress={() => {
-                        // alert('Set Tower to Yards');
-                        setTowerMetric(false);
-                    }}>
-                    <Text>Yards</Text>
-                </Pressable>
-            </View>
+        <View style={styles.inputGrid}>
+          <TextInput
+            style={styles.textInput}
+            onChangeText={ontowerHChange}
+            value={towerH}
+            placeholder="Tower height..."
+            keyboardType="numeric"
+          />
+          <Pressable
+            style={[styles.button, getButtonStyle(isTowerMetric)]}
+            onPress={() => setTowerMetric(true)}
+          >
+            <Text>Meters</Text>
+          </Pressable>
+          <Pressable
+            style={[styles.button, getButtonStyle(!isTowerMetric)]}
+            onPress={() => setTowerMetric(false)}
+          >
+            <Text>Yards</Text>
+          </Pressable>
+        </View>
 
-            <View style={styles.inputGrid}>
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={onlengthChange}
-                    value={length}
-                    placeholder="Cable length..."
-                    keyboardType="numeric"
-                />
-                <Pressable
-                    style={[styles.button, getButtonStyle(isLengthMetric)]}
-                    onPress={() => {
-                        // alert('Set Length to Meters');
-                        setLengthMetric(true);
-                    }}>
-                    <Text>Meters</Text>
-                </Pressable>
-                <Pressable
-                    style={[styles.button, getButtonStyle(!isLengthMetric)]}
-                    onPress={() => {
-                        // alert('Set Length to Yards');
-                        setLengthMetric(false);
-                    }}>
-                    <Text>Yards</Text>
-                </Pressable>
-            </View>
+        <View style={styles.inputGrid}>
+          <TextInput
+            style={styles.textInput}
+            onChangeText={onlengthChange}
+            value={length}
+            placeholder="Cable length..."
+            keyboardType="numeric"
+          />
+          <Pressable
+            style={[styles.button, getButtonStyle(isLengthMetric)]}
+            onPress={() => setLengthMetric(true)}
+          >
+            <Text>Meters</Text>
+          </Pressable>
+          <Pressable
+            style={[styles.button, getButtonStyle(!isLengthMetric)]}
+            onPress={() => setLengthMetric(false)}
+          >
+            <Text>Yards</Text>
+          </Pressable>
+        </View>
 
-            {/* Result Output */}
-            <ThemedText type="subtitle">
-                {calculateDeflection(+sGround, +sMid, +towerH, +length, 
-                    isGroundDegrees, isMidDegrees, isTowerMetric, isLengthMetric)}
-            </ThemedText>
-        </ThemedView>
+        {/* Result Output */}
+        <ThemedText type="subtitle">
+          {calculateDeflection(
+            +sGround,
+            +sMid,
+            +towerH,
+            +length,
+            isGroundDegrees,
+            isMidDegrees,
+            isTowerMetric,
+            isLengthMetric
+          )}
+        </ThemedText>
+
+        <Pressable style={styles.doneButton} onPress={handleDone}>
+          <ThemedText>Done</ThemedText>
+        </Pressable>
+      </ThemedView>
     </ParallaxScrollView>
   );
 }
 
-// function to calculate %deflection (will handle unit conversions)
-function calculateDeflection(sGround: number, sMid: number, towerH: number, length: number, 
-                            isGroundDegrees: boolean, isMidDegrees: boolean, isTowerMetric: boolean, isLenghtMetic: boolean) {
+// Function to calculate %deflection
+function calculateDeflection(
+  sGround: number,
+  sMid: number,
+  towerH: number,
+  length: number,
+  isGroundDegrees: boolean,
+  isMidDegrees: boolean,
+  isTowerMetric: boolean,
+  isLengthMetric: boolean
+) {
+  if (sGround == null || sMid == null || towerH <= 0 || length <= 0) {
+    return;
+  }
 
-    // Check for invalid inputs
-    if (sGround == null || sMid == null || towerH <= 0 || length <= 0) {
-      return;
-    }
+  if (isGroundDegrees) {
+    sGround = Math.tan(sGround) * 100;
+  }
+  if (isMidDegrees) {
+    sMid = Math.tan(sMid) * 100;
+  }
+  if (isTowerMetric) {
+    towerH *= 3.28084;
+  }
+  if (isLengthMetric) {
+    length *= 3.28084;
+  }
 
-    // Convert units as needed
-    if (isGroundDegrees) {
-      sGround = Math.tan(sGround) * 100
-    }
-    if (isMidDegrees) {
-      sMid = Math.tan(sMid) * 100
-    }
-    if (isTowerMetric) {
-      towerH = towerH * 3.28084
-    }
-    if (isLenghtMetic) {
-      length = length * 3.28084
-    }
+  const result =
+    (sGround - sMid) / 2.2 + (towerH / length) / 2.2;
 
-    // Calculate / output results
-    var result = ( (sGround - sMid) / 2.2) + ( (towerH / length) / 2.2 );
-
-    return "%Deflection = " + result;
+  return `%Deflection = ${result}`;
 }
 
 const styles = StyleSheet.create({
+  /* (Unchanged styles) */
   titleContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
   },
   stepContainer: {
-      gap: 8,
-      marginBottom: 8,
+    gap: 8,
+    marginBottom: 8,
   },
   reactLogo: {
-      height: 178,
-      width: 290,
-      bottom: 0,
-      left: 0,
-      position: 'absolute',
+    height: 178,
+    width: 290,
+    bottom: 0,
+    left: 0,
+    position: "absolute",
   },
   textInput: {
-      borderColor: 'black',
-      borderStyle: 'solid',
-      borderWidth: 1,
-      height: 30,
-      width: 200,
-      padding: 3,
+    borderColor: "black",
+    borderStyle: "solid",
+    borderWidth: 1,
+    height: 30,
+    width: 200,
+    padding: 3,
   },
   formula: {
-      fontSize: 10,
-      fontStyle: 'italic',
+    fontSize: 10,
+    fontStyle: "italic",
   },
   button: {
-      height: 30,
-      width: 65,
-      padding: 3,
-      marginLeft: 5,
-      textAlign: 'center',
-      borderColor: 'black',
-      borderStyle: 'solid',
-      borderWidth: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+    height: 30,
+    width: 65,
+    padding: 3,
+    marginLeft: 5,
+    textAlign: "center",
+    borderColor: "black",
+    borderStyle: "solid",
+    borderWidth: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   inputGrid: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginBottom: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  doneButton: {
+    backgroundColor: "#007AFF",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginTop: 20,
+    alignItems: "center",
+    alignSelf: "center",
   },
 });
