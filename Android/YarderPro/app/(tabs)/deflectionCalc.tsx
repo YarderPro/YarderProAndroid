@@ -15,21 +15,64 @@ export default function DeflectionCalcScreen() {
   const [sMid, onsMidChange] = React.useState<string>(''); 
   const [towerH, ontowerHChange] = React.useState<string>(''); 
   const [length, onLengthChange] = React.useState<string>(''); 
-  const [result, onResultChange] = React.useState<string>(''); 
 
   const [isGroundDegrees, setGroundDegrees] = React.useState(false);
   const [isMidDegrees, setMidDegrees] = React.useState(false);
   const [isTowerMetric, setTowerMetric] = React.useState(false);
   const [isLengthMetric, setLengthMetric] = React.useState(false);
 
+  var result = '';
+
+  // Function to calculate %deflection
+  const calculateDeflection = (
+    sGround: number,
+    sMid: number,
+    towerH: number,
+    length: number,
+    isGroundDegrees: boolean,
+    isMidDegrees: boolean,
+    isTowerMetric: boolean,
+    isLengthMetric: boolean
+  ) => {
+    if (sGround == null || sMid == null || towerH <= 0 || length <= 0) {
+      return '';
+    }
+
+    if (isGroundDegrees) {
+      sGround = Math.tan(sGround) * 100;
+    }
+    if (isMidDegrees) {
+      sMid = Math.tan(sMid) * 100;
+    }
+    if (isTowerMetric) {
+      towerH *= 3.28084;
+    }
+    if (isLengthMetric) {
+      length *= 3.28084;
+    }
+
+    const calculatedResult = (sGround - sMid) / 2.2 + (towerH / length) / 2.2;
+    return `${calculatedResult.toFixed(2)}`;
+  };
   const handleDone = () => {
+    result = calculateDeflection(
+      +sGround,
+      +sMid,
+      +towerH,
+      +length,
+      isGroundDegrees,
+      isMidDegrees,
+      isTowerMetric,
+      isLengthMetric
+    );
+
     // Serialize the data and navigate back to the index
     setDeflectionData({
-        sGround,
-        sMid,
-        towerH,
-        length,
-        result,
+      sGround,
+      sMid,
+      towerH,
+      length,
+      result,
     });
     router.push('/');
   };
@@ -149,7 +192,7 @@ export default function DeflectionCalcScreen() {
 
         {/* Result Output */}
         <ThemedText type="subtitle">
-          {calculateDeflection( +sGround, +sMid, +towerH, +length, +result,
+          %Deflection = {calculateDeflection( +sGround, +sMid, +towerH, +length,
             isGroundDegrees, isMidDegrees, isTowerMetric, isLengthMetric
           )}
         </ThemedText>
@@ -160,40 +203,6 @@ export default function DeflectionCalcScreen() {
       </ThemedView>
     </ParallaxScrollView>
   );
-}
-
-// Function to calculate %deflection
-function calculateDeflection(
-  sGround: number,
-  sMid: number,
-  towerH: number,
-  length: number,
-  result: number,
-  isGroundDegrees: boolean,
-  isMidDegrees: boolean,
-  isTowerMetric: boolean,
-  isLengthMetric: boolean
-) {
-  if (sGround == null || sMid == null || towerH <= 0 || length <= 0) {
-    return;
-  }
-
-  if (isGroundDegrees) {
-    sGround = Math.tan(sGround) * 100;
-  }
-  if (isMidDegrees) {
-    sMid = Math.tan(sMid) * 100;
-  }
-  if (isTowerMetric) {
-    towerH *= 3.28084;
-  }
-  if (isLengthMetric) {
-    length *= 3.28084;
-  }
-
-  result = (sGround - sMid) / 2.2 + (towerH / length) / 2.2;
-
-  return `%Deflection = ${result}`;
 }
 
 const styles = StyleSheet.create({

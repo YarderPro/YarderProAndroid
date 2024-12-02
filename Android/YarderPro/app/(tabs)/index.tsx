@@ -1,17 +1,62 @@
-import { Image, StyleSheet, Pressable } from "react-native";
+import { Image, StyleSheet, Pressable, FlatList, View } from "react-native";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useRouter } from "expo-router";
-import { useAppContext } from '../appContext';
+import { useAppContext } from "../appContext";
 import React from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function HomeScreen() {
   const router = useRouter();
   const { deflectionData } = useAppContext();
   const [calculations, setCalculations] = React.useState<
-    { date: string; inputs: Record<string, any> }[]
+    { id: string; result: string; inputs: Record<string, any> }[]
   >([]);
+
+  // Load calculations from AsyncStorage
+  React.useEffect(() => {
+    const loadCalculations = async () => {
+      const storedCalculations = await AsyncStorage.getItem("calculations");
+      if (storedCalculations) {
+        setCalculations(JSON.parse(storedCalculations));
+      }
+    };
+    loadCalculations();
+  }, []);
+
+  // Save calculations to AsyncStorage
+  const saveCalculations = async (newCalculations: typeof calculations) => {
+    await AsyncStorage.setItem("calculations", JSON.stringify(newCalculations));
+    setCalculations(newCalculations);
+  };
+
+  // Add the latest deflection data
+  React.useEffect(() => {
+    if (deflectionData.result) {
+      const newCalculation = {
+        id: `${Date.now()}`,
+        result: deflectionData.result,
+        inputs: { ...deflectionData },
+      };
+      const updatedCalculations = [...calculations, newCalculation];
+      saveCalculations(updatedCalculations);
+    }
+  }, [deflectionData]);
+
+  // Delete a calculation
+  const deleteCalculation = (id: string) => {
+    const updatedCalculations = calculations.filter((calc) => calc.id !== id);
+    saveCalculations(updatedCalculations);
+  };
+
+  // Navigate to the calculator with pre-filled inputs
+  const editCalculation = (inputs: Record<string, any>) => {
+    router.push({
+      pathname: "/deflectionCalc",
+      params: { ...inputs },
+    });
+  };
 
   return (
     <ParallaxScrollView
@@ -29,21 +74,29 @@ export default function HomeScreen() {
         <Pressable
           style={styles.addButton}
           onPress={() => router.push("/deflectionCalc")}
-          >
+        >
           <ThemedText>+</ThemedText>
         </Pressable>
-
       </ThemedView>
 
-      <ThemedView>
-            <ThemedText>Deflection Data:</ThemedText>
-            <ThemedText>Slope to Ground: {deflectionData.sGround}</ThemedText>
-            <ThemedText>Slope to Midspan: {deflectionData.sMid}</ThemedText>
-            <ThemedText>Tower Height: {deflectionData.towerH}</ThemedText>
-            <ThemedText>Length: {deflectionData.length}</ThemedText>
-            <ThemedText>%Deflection: {deflectionData.result}</ThemedText>
-      </ThemedView>
-
+      <FlatList
+        data={calculations}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.calculationList}
+        renderItem={({ item }) => (
+          <View style={styles.calculationBox}>
+            <Pressable onPress={() => editCalculation(item.inputs)}>
+              <ThemedText>{item.result}</ThemedText>
+            </Pressable>
+            <Pressable
+              style={styles.deleteButton}
+              onPress={() => deleteCalculation(item.id)}
+            >
+              <ThemedText>Delete</ThemedText>
+            </Pressable>
+          </View>
+        )}
+      />
     </ParallaxScrollView>
   );
 }
@@ -77,6 +130,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#f0f0f0",
     padding: 16,
     marginBottom: 8,
+    borderRadius: 4,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  deleteButton: {
+    backgroundColor: "#FF3B30",
+    paddingVertical: 4,
+    paddingHorizontal: 8,
     borderRadius: 4,
   },
 });
