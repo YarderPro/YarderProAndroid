@@ -149,7 +149,7 @@ export default function DeflectionCalcScreen() {
 
         {/* Result Output */}
         <ThemedText type="subtitle">
-          {calculateDeflection( +sGround, +sMid, +towerH, +length,
+          {calculateDeflection( +sGround, +sMid, +towerH, +length, +result,
             isGroundDegrees, isMidDegrees, isTowerMetric, isLengthMetric
           )}
         </ThemedText>

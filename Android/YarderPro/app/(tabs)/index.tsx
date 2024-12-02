@@ -41,6 +41,7 @@ export default function HomeScreen() {
             <ThemedText>Slope to Midspan: {deflectionData.sMid}</ThemedText>
             <ThemedText>Tower Height: {deflectionData.towerH}</ThemedText>
             <ThemedText>Length: {deflectionData.length}</ThemedText>
+            <ThemedText>%Deflection: {deflectionData.result}</ThemedText>
       </ThemedView>
 
     </ParallaxScrollView>
