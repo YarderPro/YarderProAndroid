@@ -7,12 +7,14 @@ interface AppContextType {
         sMid: string;
         towerH: string;
         length: string;
+        result: string;
     };
     setDeflectionData: React.Dispatch<React.SetStateAction<{
         sGround: string;
         sMid: string;
         towerH: string;
         length: string;
+        result: string;
     }>>;
 }
 
@@ -24,6 +26,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         sMid: '',
         towerH: '',
         length: '',
+        result: '',
     });
 
     return (

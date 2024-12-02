@@ -14,7 +14,8 @@ export default function DeflectionCalcScreen() {
   const [sGround, onsGroundChange] = React.useState<string>('');
   const [sMid, onsMidChange] = React.useState<string>(''); 
   const [towerH, ontowerHChange] = React.useState<string>(''); 
-  const [length, onlengthChange] = React.useState<string>(''); 
+  const [length, onLengthChange] = React.useState<string>(''); 
+  const [result, onResultChange] = React.useState<string>(''); 
 
   const [isGroundDegrees, setGroundDegrees] = React.useState(false);
   const [isMidDegrees, setMidDegrees] = React.useState(false);
@@ -28,6 +29,7 @@ export default function DeflectionCalcScreen() {
         sMid,
         towerH,
         length,
+        result,
     });
     router.push('/');
   };
@@ -126,7 +128,7 @@ export default function DeflectionCalcScreen() {
         <View style={styles.inputGrid}>
           <TextInput
             style={styles.textInput}
-            onChangeText={onlengthChange}
+            onChangeText={onLengthChange}
             value={length}
             placeholder="Cable length..."
             keyboardType="numeric"
@@ -147,15 +149,8 @@ export default function DeflectionCalcScreen() {
 
         {/* Result Output */}
         <ThemedText type="subtitle">
-          {calculateDeflection(
-            +sGround,
-            +sMid,
-            +towerH,
-            +length,
-            isGroundDegrees,
-            isMidDegrees,
-            isTowerMetric,
-            isLengthMetric
+          {calculateDeflection( +sGround, +sMid, +towerH, +length,
+            isGroundDegrees, isMidDegrees, isTowerMetric, isLengthMetric
           )}
         </ThemedText>
 
@@ -173,6 +168,7 @@ function calculateDeflection(
   sMid: number,
   towerH: number,
   length: number,
+  result: number,
   isGroundDegrees: boolean,
   isMidDegrees: boolean,
   isTowerMetric: boolean,
@@ -195,8 +191,7 @@ function calculateDeflection(
     length *= 3.28084;
   }
 
-  const result =
-    (sGround - sMid) / 2.2 + (towerH / length) / 2.2;
+  result = (sGround - sMid) / 2.2 + (towerH / length) / 2.2;
 
   return `%Deflection = ${result}`;
 }
