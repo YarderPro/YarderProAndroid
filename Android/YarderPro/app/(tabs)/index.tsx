@@ -32,7 +32,7 @@ export default function HomeScreen() {
         calc.result === deflectionData.result &&
         JSON.stringify(calc.inputs) === JSON.stringify(deflectionData)
       );
-  
+      
       if (!isDuplicate) {
         const newCalculation = {
           id: `${Date.now()}`,
