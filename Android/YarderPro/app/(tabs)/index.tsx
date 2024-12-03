@@ -52,6 +52,7 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   titleContainer: {
+    fontFamily: 'Inter',
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
