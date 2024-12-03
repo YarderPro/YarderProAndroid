@@ -25,29 +25,24 @@ export default function HomeScreen() {
     loadCalculations();
   }, []);
 
-  // Add the latest deflection data
-  React.useEffect(() => {
-    const isDuplicate = calculations.some((calc: { id: string; result: string; inputs: Record<string, any> }) =>
-        calc.result === deflectionData.result &&
-        JSON.stringify(calc.inputs) === JSON.stringify(deflectionData)
-      );
-
-      if (!isDuplicate) {
-        const newCalculation = {
-          id: `${Date.now()}`,
-          result: deflectionData.result,
-          inputs: { ...deflectionData },
-        };
-        const updatedCalculations = [...calculations, newCalculation];
-        saveCalculations(updatedCalculations);
-      }
-  }, [deflectionData, calculations]);
-
   // Save calculations to AsyncStorage
   const saveCalculations = async (newCalculations: typeof calculations) => {
     await AsyncStorage.setItem("calculations", JSON.stringify(newCalculations));
     setCalculations(newCalculations);
   };
+
+  // Add the latest deflection data
+  React.useEffect(() => {
+    if (deflectionData.result) {
+      const newCalculation = {
+        id: `${Date.now()}`,
+        result: deflectionData.result,
+        inputs: { ...deflectionData },
+      };
+      const updatedCalculations = [...calculations, newCalculation];
+      saveCalculations(updatedCalculations);
+    }
+  }, [deflectionData]);
 
   // Delete a calculation
   const deleteCalculation = (id: string) => {
@@ -91,7 +86,7 @@ export default function HomeScreen() {
         renderItem={({ item }) => (
           <View style={styles.calculationBox}>
             <Pressable onPress={() => editCalculation(item.inputs)}>
-              <ThemedText>{item.result}</ThemedText>
+              <ThemedText>%Deflection = {item.result}</ThemedText>
             </Pressable>
             <Pressable
               style={styles.deleteButton}
