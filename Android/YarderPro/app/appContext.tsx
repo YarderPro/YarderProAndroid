@@ -8,6 +8,10 @@ interface AppContextType {
         towerH: string;
         length: string;
         result: string;
+        isGroundDegrees: boolean,
+        isMidDegrees: boolean,
+        isTowerMetric: boolean,
+        isLengthMetric: boolean
     };
     setDeflectionData: React.Dispatch<React.SetStateAction<{
         sGround: string;
@@ -15,6 +19,10 @@ interface AppContextType {
         towerH: string;
         length: string;
         result: string;
+        isGroundDegrees: boolean,
+        isMidDegrees: boolean,
+        isTowerMetric: boolean,
+        isLengthMetric: boolean
     }>>;
 }
 
@@ -27,6 +35,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         towerH: '',
         length: '',
         result: '',
+        isGroundDegrees: false,
+        isMidDegrees: false,
+        isTowerMetric: false,
+        isLengthMetric: false
     });
 
     return (

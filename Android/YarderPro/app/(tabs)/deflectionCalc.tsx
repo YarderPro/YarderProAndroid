@@ -73,6 +73,10 @@ export default function DeflectionCalcScreen() {
       towerH,
       length,
       result,
+      isGroundDegrees,
+      isMidDegrees,
+      isTowerMetric,
+      isLengthMetric
     });
     router.push('/');
   };
@@ -206,7 +210,6 @@ export default function DeflectionCalcScreen() {
 }
 
 const styles = StyleSheet.create({
-  /* (Unchanged styles) */
   titleContainer: {
     flexDirection: "row",
     alignItems: "center",
