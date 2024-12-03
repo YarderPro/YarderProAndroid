@@ -11,6 +11,11 @@
     "preview": {
       "distribution": "internal"
     },
+    "preview2": {
+      "android": {
+        "gradleCommand": ":app:assembleRelease"
+      }
+    },
     "production": {
       "autoIncrement": true
     }
