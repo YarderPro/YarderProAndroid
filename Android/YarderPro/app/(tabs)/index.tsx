@@ -27,12 +27,11 @@ export default function HomeScreen() {
 
   // Add the latest deflection data
   React.useEffect(() => {
-    if (deflectionData.result) {
-      const isDuplicate = calculations.some((calc: { id: string; result: string; inputs: Record<string, any> }) =>
+    const isDuplicate = calculations.some((calc: { id: string; result: string; inputs: Record<string, any> }) =>
         calc.result === deflectionData.result &&
         JSON.stringify(calc.inputs) === JSON.stringify(deflectionData)
       );
-      
+
       if (!isDuplicate) {
         const newCalculation = {
           id: `${Date.now()}`,
@@ -42,7 +41,6 @@ export default function HomeScreen() {
         const updatedCalculations = [...calculations, newCalculation];
         saveCalculations(updatedCalculations);
       }
-    }
   }, [deflectionData, calculations]);
 
   // Save calculations to AsyncStorage
