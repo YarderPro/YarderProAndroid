@@ -2,13 +2,13 @@ import { Image, StyleSheet, TextInput, Pressable, Text, View } from "react-nativ
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import React from "react";
+import React, {useEffect} from "react";
 import { useAppContext } from '../appContext';
 import { useRouter} from "expo-router";
 
 export default function DeflectionCalcScreen() {
   const router = useRouter();
-  const { setDeflectionData } = useAppContext();
+  const { deflectionData, setDeflectionData } = useAppContext();
 
   // Initialize state with values from params or default to empty
   const [sGround, onsGroundChange] = React.useState<string>('');
@@ -84,6 +84,32 @@ export default function DeflectionCalcScreen() {
   const getButtonStyle = (isSelected: boolean) => ({
     backgroundColor: isSelected ? "#d3d3d3" : "#fff",
     opacity: isSelected ? 0.5 : 1,
+  });
+
+  // Auto-fill inputs when arriving on this screen
+  useEffect(() => {
+    setDeflectionData
+    if (deflectionData) {({
+      sGround,
+      sMid,
+      towerH,
+      length,
+      result,
+      isGroundDegrees,
+      isMidDegrees,
+      isTowerMetric,
+      isLengthMetric
+    });
+    
+      onsGroundChange(deflectionData.sGround || "");
+      onsMidChange(deflectionData.sMid || "");
+      ontowerHChange(deflectionData.towerH || "");
+      onLengthChange(deflectionData.length || "");
+      setGroundDegrees(deflectionData.isGroundDegrees || false);
+      setMidDegrees(deflectionData.isMidDegrees || false);
+      setTowerMetric(deflectionData.isTowerMetric || false);
+      setLengthMetric(deflectionData.isLengthMetric || false);
+    }
   });
 
   return (
