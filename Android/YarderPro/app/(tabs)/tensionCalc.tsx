@@ -168,14 +168,14 @@ export default function tensionCalcScreen() {
           </View>              
 
           <View style={styles.inputGrid}>
-              <TextInput 
+            <TextInput 
               style={styles.textInput} 
               onChangeText={qWeightChange} 
               value={(qWeight )} 
               placeholder="Weight of the cable..." 
               keyboardType="numeric"
-          />
-          <Pressable
+            />
+            <Pressable
               style={[styles.button, getButtonStyle(isqWeightMetric)]}
               onPress={() => setqWeightMetric(true)}
             >
@@ -192,7 +192,7 @@ export default function tensionCalcScreen() {
         
         <Pressable style={styles.doneButton} onPress={handleDone}>
               <ThemedText>Done</ThemedText>
-            </Pressable>
+        </Pressable>
 
         <ThemedText type="subtitle">{calculateTension(+lSpan, +pLoad, +yMid, +qWeight, islSpanMetric, ispLoadMetric, isyMidMetric, isqWeightMetric)}
         </ThemedText>
