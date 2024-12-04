@@ -115,6 +115,6 @@ const styles = StyleSheet.create({
     formula: {
       fontSize: 10,
       fontStyle: 'italic',
-      fontFamily: 'Inter',
+      fontFamily: 'Helvetica',
     },
   });
