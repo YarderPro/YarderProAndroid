@@ -86,6 +86,7 @@ export default function DeflectionCalcScreen() {
     opacity: isSelected ? 0.5 : 1,
   });
 
+  /*
   // Auto-fill inputs when arriving on this screen
   useEffect(() => {
     setDeflectionData
@@ -111,6 +112,7 @@ export default function DeflectionCalcScreen() {
       setLengthMetric(deflectionData.isLengthMetric || false);
     }
   });
+  */
 
   return (
     <ParallaxScrollView
