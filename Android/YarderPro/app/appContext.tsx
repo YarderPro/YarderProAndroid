@@ -8,10 +8,10 @@ interface AppContextType {
         towerH: string;
         length: string;
         result: string;
-        isGroundDegrees: boolean,
-        isMidDegrees: boolean,
-        isTowerMetric: boolean,
-        isLengthMetric: boolean
+        isGroundDegrees: boolean;
+        isMidDegrees: boolean;
+        isTowerMetric: boolean;
+        isLengthMetric: boolean;
     };
     setDeflectionData: React.Dispatch<React.SetStateAction<{
         sGround: string;
@@ -19,16 +19,39 @@ interface AppContextType {
         towerH: string;
         length: string;
         result: string;
-        isGroundDegrees: boolean,
-        isMidDegrees: boolean,
-        isTowerMetric: boolean,
-        isLengthMetric: boolean
+        isGroundDegrees: boolean;
+        isMidDegrees: boolean;
+        isTowerMetric: boolean;
+        isLengthMetric: boolean;
+    }>>;
+    tensionData: {
+        lSpan: string;
+        pLoad: string;
+        yMid: string;
+        qWeight: string;
+        result: string;
+        isqWeightMetric: boolean;
+        isyMidMetric: boolean;
+        islSpanMetric: boolean;
+        ispLoadMetric: boolean;
+    };
+    setTensionData: React.Dispatch<React.SetStateAction<{
+        lSpan: string;
+        pLoad: string;
+        yMid: string;
+        qWeight: string;
+        result: string;
+        isqWeightMetric: boolean;
+        isyMidMetric: boolean;
+        islSpanMetric: boolean;
+        ispLoadMetric: boolean;
     }>>;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    // State for deflection data
     const [deflectionData, setDeflectionData] = useState({
         sGround: '',
         sMid: '',
@@ -41,8 +64,21 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         isLengthMetric: false
     });
 
+    // State for tension data
+    const [tensionData, setTensionData] = useState({
+        lSpan: '',
+        pLoad: '',
+        yMid: '',
+        qWeight: '',
+        result: '',
+        isqWeightMetric: false,
+        isyMidMetric: false,
+        islSpanMetric: false,
+        ispLoadMetric: false
+    });
+
     return (
-        <AppContext.Provider value={{ deflectionData, setDeflectionData }}>
+        <AppContext.Provider value={{ deflectionData, setDeflectionData, tensionData, setTensionData }}>
             {children}
         </AppContext.Provider>
     );
