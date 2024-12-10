@@ -10,7 +10,7 @@ import React from 'react';
   
 export default function tensionCalcScreen() {
   const [lSpan, lSpanChange] = React.useState('');
-  const [pLoad, pLoadChange] = React.useState('');
+  const [pLoad, pLoadChange] = React.useState(''); 
   const [yMid, yMidChange] = React.useState('');
   const [qWeight, qWeightChange] = React.useState('');
 
