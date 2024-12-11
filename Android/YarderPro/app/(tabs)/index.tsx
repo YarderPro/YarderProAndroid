@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 16,
-    marginTop: 16,
+    marginTop: 45,
   },
   reactLogo: {
     height: 178,

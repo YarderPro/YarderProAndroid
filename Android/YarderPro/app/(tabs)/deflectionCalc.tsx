@@ -2,13 +2,13 @@ import { Image, StyleSheet, TextInput, Pressable, Text, View } from "react-nativ
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import React, {useEffect} from "react";
+import React from "react";
 import { useAppContext } from '../appContext';
 import { useRouter} from "expo-router";
 
 export default function DeflectionCalcScreen() {
   const router = useRouter();
-  const { deflectionData, setDeflectionData } = useAppContext();
+  const { setDeflectionData } = useAppContext();
 
   // Initialize state with values from params or default to empty
   const [sGround, onsGroundChange] = React.useState<string>('');
@@ -18,17 +18,19 @@ export default function DeflectionCalcScreen() {
 
   const [isGroundDegrees, setGroundDegrees] = React.useState(false);
   const [isMidDegrees, setMidDegrees] = React.useState(false);
-  const [isTowerMetric, setTowerMetric] = React.useState(false);
-  const [isLengthMetric, setLengthMetric] = React.useState(false);
+  const [isTowerMetric, setTowerMetric] = React.useState(true);
+  const [isLengthMetric, setLengthMetric] = React.useState(true);
 
   var result = '';
 
   // Function to calculate %deflection
   const calculateDeflection = (
+    // User input variables
     sGround: number,
     sMid: number,
     towerH: number,
     length: number,
+    // Unit toggle boolean variables
     isGroundDegrees: boolean,
     isMidDegrees: boolean,
     isTowerMetric: boolean,
@@ -44,11 +46,11 @@ export default function DeflectionCalcScreen() {
     if (isMidDegrees) {
       sMid = Math.tan(sMid) * 100;
     }
-    if (isTowerMetric) {
-      towerH *= 3.28084;
+    if (!isTowerMetric) {
+      towerH *= 0.9144;
     }
-    if (isLengthMetric) {
-      length *= 3.28084;
+    if (!isLengthMetric) {
+      length *= 0.9144;
     }
 
     const calculatedResult = (sGround - sMid) / 2.2 + (towerH / length) / 2.2;
@@ -242,6 +244,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
+    marginTop: 45,
   },
   stepContainer: {
     gap: 8,
