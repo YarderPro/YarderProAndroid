@@ -35,29 +35,29 @@ export function ThemedText({
 
 const styles = StyleSheet.create({
   default: {
-    fontFamily:'Helvetica',
+    fontFamily: 'Helvetica',
     fontSize: 16,
     lineHeight: 24,
   },
   defaultSemiBold: {
-    fontFamily:'Helvetica',
+    fontFamily: 'Helvetica',
     fontSize: 16,
     lineHeight: 24,
     fontWeight: '600',
   },
   title: {
-    fontFamily:'Helvetica',
+    fontFamily: 'Helvetica',
     fontSize: 32,
     fontWeight: 'bold',
     lineHeight: 32,
   },
   subtitle: {
-    fontFamily:'Helvetica',
+    fontFamily: 'Helvetica',
     fontSize: 20,
     fontWeight: 'bold',
   },
   link: {
-    fontFamily:'Helvetica',
+    fontFamily: 'Helvetica',
     lineHeight: 30,
     fontSize: 16,
     color: '#0a7ea4',
