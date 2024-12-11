@@ -1,16 +1,15 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-import React from 'react';
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-
-
-
-//fix image 
+import { Image, StyleSheet, Pressable, FlatList, View } from "react-native";
+import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import { useRouter } from "expo-router";
+import { useAppContext } from "../appContext";
+import React from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function HomeScreen() {
   const router = useRouter();
+  // Deflection / tension data defined in appContext
   const { deflectionData } = useAppContext();
   const [calculations, setCalculations] = React.useState<
     { id: string; result: string; inputs: Record<string, any> }[]
@@ -62,15 +61,14 @@ export default function HomeScreen() {
 
   return (
     <ParallaxScrollView
-     headerBackgroundColor={{ light: '#A1CEDC', dark: '#B2ECE1' }}
+      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
       headerImage={
         <Image
-          source={require('@/assets/images/AppIcon.jpeg')}
-          style={styles.appleLogo}
+          source={require("@/assets/images/AppIcon.jpeg")}
+          style={styles.reactLogo}
         />
-      }>
-
-        
+      }
+    >
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Calculations</ThemedText>
 
@@ -106,16 +104,13 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   titleContainer: {
-    fontFamily: 'Helvetica',
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+    marginTop: 45,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  appleLogo: {
+  reactLogo: {
     height: 178,
     width: 290,
     bottom: 0,
@@ -148,4 +143,3 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
 });
-

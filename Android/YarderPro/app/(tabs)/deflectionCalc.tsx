@@ -21,6 +21,7 @@ export default function DeflectionCalcScreen() {
   const [isTowerMetric, setTowerMetric] = React.useState(true);
   const [isLengthMetric, setLengthMetric] = React.useState(true);
 
+  // Result var stored as a string
   var result = '';
 
   // Function to calculate %deflection

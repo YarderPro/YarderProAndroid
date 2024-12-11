@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext } from 'react';
 
-// Define the context type
+// Define the context
 interface AppContextType {
     deflectionData: {
         sGround: string;
