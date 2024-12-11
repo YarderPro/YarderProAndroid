@@ -126,6 +126,7 @@ export default function DeflectionCalcScreen() {
         />
       }
     >
+      {/* Titles and displayed formula */}
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Deflection Calculator</ThemedText>
       </ThemedView>
@@ -136,93 +137,98 @@ export default function DeflectionCalcScreen() {
         </ThemedText>
 
         {/* Inputs and Buttons */}
-        <View style={styles.inputGrid}>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={onsGroundChange}
-            value={sGround}
-            placeholder="% slope to ground..."
-            keyboardType="numeric"
-          />
-          <Pressable
-            style={[styles.button, getButtonStyle(isGroundDegrees)]}
-            onPress={() => setGroundDegrees(true)}
-          >
-            <Text>Degrees</Text>
-          </Pressable>
-          <Pressable
-            style={[styles.button, getButtonStyle(!isGroundDegrees)]}
-            onPress={() => setGroundDegrees(false)}
-          >
-            <Text>%Slope</Text>
-          </Pressable>
-        </View>
 
-        <View style={styles.inputGrid}>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={onsMidChange}
-            value={sMid}
-            placeholder="% slope to midspan..."
-            keyboardType="numeric"
-          />
-          <Pressable
-            style={[styles.button, getButtonStyle(isMidDegrees)]}
-            onPress={() => setMidDegrees(true)}
-          >
-            <Text>Degrees</Text>
-          </Pressable>
-          <Pressable
-            style={[styles.button, getButtonStyle(!isMidDegrees)]}
-            onPress={() => setMidDegrees(false)}
-          >
-            <Text>%Slope</Text>
-          </Pressable>
-        </View>
+          {/* sGround */}
+          <View style={styles.inputGrid}>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={onsGroundChange}
+              value={sGround}
+              placeholder="% slope to ground..."
+              keyboardType="numeric"
+            />
+            <Pressable
+              style={[styles.button, getButtonStyle(isGroundDegrees)]}
+              onPress={() => setGroundDegrees(true)}
+            >
+              <Text>Degrees</Text>
+            </Pressable>
+            <Pressable
+              style={[styles.button, getButtonStyle(!isGroundDegrees)]}
+              onPress={() => setGroundDegrees(false)}
+            >
+              <Text>%Slope</Text>
+            </Pressable>
+          </View>
 
-        <View style={styles.inputGrid}>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={ontowerHChange}
-            value={towerH}
-            placeholder="Tower height..."
-            keyboardType="numeric"
-          />
-          <Pressable
-            style={[styles.button, getButtonStyle(isTowerMetric)]}
-            onPress={() => setTowerMetric(true)}
-          >
-            <Text>Meters</Text>
-          </Pressable>
-          <Pressable
-            style={[styles.button, getButtonStyle(!isTowerMetric)]}
-            onPress={() => setTowerMetric(false)}
-          >
-            <Text>Yards</Text>
-          </Pressable>
-        </View>
+          {/* sMid */}
+          <View style={styles.inputGrid}>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={onsMidChange}
+              value={sMid}
+              placeholder="% slope to midspan..."
+              keyboardType="numeric"
+            />
+            <Pressable
+              style={[styles.button, getButtonStyle(isMidDegrees)]}
+              onPress={() => setMidDegrees(true)}
+            >
+              <Text>Degrees</Text>
+            </Pressable>
+            <Pressable
+              style={[styles.button, getButtonStyle(!isMidDegrees)]}
+              onPress={() => setMidDegrees(false)}
+            >
+              <Text>%Slope</Text>
+            </Pressable>
+          </View>
 
-        <View style={styles.inputGrid}>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={onLengthChange}
-            value={length}
-            placeholder="Cable length..."
-            keyboardType="numeric"
-          />
-          <Pressable
-            style={[styles.button, getButtonStyle(isLengthMetric)]}
-            onPress={() => setLengthMetric(true)}
-          >
-            <Text>Meters</Text>
-          </Pressable>
-          <Pressable
-            style={[styles.button, getButtonStyle(!isLengthMetric)]}
-            onPress={() => setLengthMetric(false)}
-          >
-            <Text>Yards</Text>
-          </Pressable>
-        </View>
+          {/* towerH */}
+          <View style={styles.inputGrid}>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={ontowerHChange}
+              value={towerH}
+              placeholder="Tower height..."
+              keyboardType="numeric"
+            />
+            <Pressable
+              style={[styles.button, getButtonStyle(isTowerMetric)]}
+              onPress={() => setTowerMetric(true)}
+            >
+              <Text>Meters</Text>
+            </Pressable>
+            <Pressable
+              style={[styles.button, getButtonStyle(!isTowerMetric)]}
+              onPress={() => setTowerMetric(false)}
+            >
+              <Text>Yards</Text>
+            </Pressable>
+          </View>
+
+          {/* length */}
+          <View style={styles.inputGrid}>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={onLengthChange}
+              value={length}
+              placeholder="Cable length..."
+              keyboardType="numeric"
+            />
+            <Pressable
+              style={[styles.button, getButtonStyle(isLengthMetric)]}
+              onPress={() => setLengthMetric(true)}
+            >
+              <Text>Meters</Text>
+            </Pressable>
+            <Pressable
+              style={[styles.button, getButtonStyle(!isLengthMetric)]}
+              onPress={() => setLengthMetric(false)}
+            >
+              <Text>Yards</Text>
+            </Pressable>
+          </View>
 
         {/* Result Output */}
         <ThemedText type="subtitle">
@@ -239,6 +245,7 @@ export default function DeflectionCalcScreen() {
   );
 }
 
+// Tab specific styling
 const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: "row",
