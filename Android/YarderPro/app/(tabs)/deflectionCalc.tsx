@@ -84,38 +84,11 @@ export default function DeflectionCalcScreen() {
     router.push('/');
   };
 
+  // Grey out buttons when they're selected
   const getButtonStyle = (isSelected: boolean) => ({
     backgroundColor: isSelected ? "#d3d3d3" : "#fff",
     opacity: isSelected ? 0.5 : 1,
   });
-
-  /*
-  // Auto-fill inputs when arriving on this screen
-  useEffect(() => {
-    setDeflectionData
-    if (deflectionData) {({
-      sGround,
-      sMid,
-      towerH,
-      length,
-      result,
-      isGroundDegrees,
-      isMidDegrees,
-      isTowerMetric,
-      isLengthMetric
-    });
-    
-      onsGroundChange(deflectionData.sGround || "");
-      onsMidChange(deflectionData.sMid || "");
-      ontowerHChange(deflectionData.towerH || "");
-      onLengthChange(deflectionData.length || "");
-      setGroundDegrees(deflectionData.isGroundDegrees || false);
-      setMidDegrees(deflectionData.isMidDegrees || false);
-      setTowerMetric(deflectionData.isTowerMetric || false);
-      setLengthMetric(deflectionData.isLengthMetric || false);
-    }
-  });
-  */
 
   return (
     <ParallaxScrollView

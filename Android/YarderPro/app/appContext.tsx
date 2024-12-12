@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext } from 'react';
 
-// Define the context
+// COntext definitions
 interface AppContextType {
     deflectionData: {
         sGround: string;
@@ -60,8 +60,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         result: '',
         isGroundDegrees: false,
         isMidDegrees: false,
-        isTowerMetric: false,
-        isLengthMetric: false
+        isTowerMetric: true,
+        isLengthMetric: true
     });
 
     // State for tension data
@@ -71,10 +71,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         yMid: '',
         qWeight: '',
         result: '',
-        isqWeightMetric: false,
-        isyMidMetric: false,
-        islSpanMetric: false,
-        ispLoadMetric: false
+        isqWeightMetric: true,
+        isyMidMetric: true,
+        islSpanMetric: true,
+        ispLoadMetric: true
     });
 
     return (
